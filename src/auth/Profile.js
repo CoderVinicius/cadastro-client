@@ -4,7 +4,7 @@ import api from "../apis/api";
 
 
 function Profile() {
-  const [state] = useState({
+  const [state, setState] = useState({
     _id: "",
     name: "",
     email: "",
@@ -13,7 +13,8 @@ function Profile() {
     pis: "",
     address: {
       street: "",
-      complemento: "",
+      complement: "",
+      country: "",
       city: "",
       district: "",
       postalCode: "",
@@ -26,6 +27,8 @@ function Profile() {
       try {
         const response = await api.get("/profile");
         console.log("eu sou Response no Profile ---> ", response);
+
+        setState({ ...response.data});
 
       } catch (err) {
         console.log(err);
@@ -48,7 +51,7 @@ function Profile() {
       <TextProfile label="Cidade" name={state.address.city} />
       <TextProfile label="Estado" name={state.address.district} />
       <TextProfile label="País" name={state.address.country} />
-      <TextProfile label="Complemento" name={state.address.neighbourhood} />
+      <TextProfile label="Complemento" name={state.address.complement} />
       <TextProfile label="CEP" name={state.address.postalCode} />
       
     </div>

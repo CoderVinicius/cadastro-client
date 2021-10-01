@@ -31,10 +31,10 @@ function Login(props) {
         JSON.stringify({ ...response.data })
       );
       setError(null);
-      props.history.push("/");
+      props.history.push("/profile");
     } catch (err) {
       console.error(err.response);
-      setError(err.response.data.error);
+     
     }
   }
 
