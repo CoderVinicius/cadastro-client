@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import TextProfile from "../components/TextProfile";
+import { Link, useParams } from "react-router-dom";
 import api from "../apis/api";
 
 
@@ -22,13 +22,15 @@ function Profile() {
     }
   });
 
+  const { id } = useParams();
+
   useEffect(() => {
     async function FetchProfile() {
       try {
         const response = await api.get("/profile");
         console.log("eu sou Response no Profile ---> ", response);
 
-        setState({ ...response.data});
+        setState({ ...response.data,   });
 
       } catch (err) {
         console.log(err);
@@ -39,21 +41,58 @@ function Profile() {
 
   return (
     <div>
-      <TextProfile label="Nome" name={state.name} />
-      <TextProfile label="Email" name={state.email} />  
-      <TextProfile label="CPF" name={state.document} />
-      <TextProfile label="PIS" name={state.pis} />
+      <h1>Olá, {state.name}!</h1>  
+      <hr />
+      <p>
+        <strong>Nome: </strong>
+        {state.name}
+      </p>
+      <p>
+        <strong>E-mail: </strong>
+        {state.email}
+      </p>
+      <p>
+        <strong>CPF: </strong>
+        {state.document}
+      </p>
+      <p>
+        <strong>Pis: </strong>
+        {state.pis}
+      </p>
 
       <h2 className="mb-4 mt-4">Endereço</h2>
 
-      <TextProfile label="Rua" name={state.address.street} />
-      <TextProfile label="Numero" name={state.address.number} />
-      <TextProfile label="Cidade" name={state.address.city} />
-      <TextProfile label="Estado" name={state.address.district} />
-      <TextProfile label="País" name={state.address.country} />
-      <TextProfile label="Complemento" name={state.address.complement} />
-      <TextProfile label="CEP" name={state.address.postalCode} />
-      
+      <p>
+        <strong>Rua: </strong>
+        {state.address.street}
+      </p>
+      <p>
+        <strong>Numero: </strong>
+        {state.address.number}
+      </p>
+      <p>
+        <strong>Cidade: </strong>
+        {state.address.city}
+      </p>
+      <p>
+        <strong>Estado: </strong>
+        {state.address.district}
+      </p>
+      <p>
+        <strong>Pais: </strong>
+        {state.address.country}
+      </p>
+      <p>
+        <strong>Complemento: </strong>
+        {state.address.complement}
+      </p>
+      <p>
+        <strong>CEP: </strong>
+        {state.address.postalCode}
+      </p>
+      <Link className="btn btn-primary" to={`/editUser/${id}`} >
+        Editar Perfil
+      </Link>
     </div>
   );
 }

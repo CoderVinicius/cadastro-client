@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import TextInput from "../../components/TextInput";
-import { useParams } from "react-router";
 import api from "../../apis/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Link } from 'react-router-dom'
 
-function EditeUser(props) {
+
+function EditUser(props) {
 
   const history = useHistory();
 
   const [state, setState] = useState({
     name: "",
-    email: "",
-    password: "",
     document: "",
     pis: "",
     address: {
@@ -33,17 +31,17 @@ function EditeUser(props) {
   }
 
   useEffect(() => {
-    async function fetchEditeUser() {
+    async function fetchEditUser() {
         try {
-          const fondUser = await api.get("/profile");
+          const foundUser = await api.get("/profile");
   
-          const addressObj = ({ ...fondUser.data.address });
+          const addressObj = ({ ...foundUser.data.address });
   
-          delete fondUser.data.address;
+          delete foundUser.data.address;
           delete addressObj._id;
   
           setState({
-            ...fondUser.data,
+            ...foundUser.data,
             ...addressObj,
           });
   
@@ -51,7 +49,7 @@ function EditeUser(props) {
           console.log(err);
         }
       }
-      fetchEditeUser();
+      fetchEditUser();
     }, []); 
 
   async function handleSubmit(event) {
@@ -81,7 +79,7 @@ function EditeUser(props) {
 
       console.log("eu sou handleSubmit --> ", response)
 
-      history.push("/profile")
+      history.push(`/profile/${id}`)
 
     } catch (err) {
       console.log(err);
@@ -97,15 +95,6 @@ function EditeUser(props) {
         value={state.name}
         onChange={handleChange}
         name="name"
-      />
-
-      <TextInput
-        label="E-mail"
-        type="email"
-        required={false}
-        value={state.email}
-        onChange={handleChange}
-        name="email"
       />
 
       <TextInput
@@ -127,6 +116,16 @@ function EditeUser(props) {
       />    
 
       <h2 className="mb-4 mt-4">Address</h2>
+
+      <TextInput
+        label="CEP"
+        type="text"
+        required={false}
+        value={state.postalCode}
+        onChange={handleChange}
+        name="postalCode"
+      />
+
       <TextInput
         label="Rua"
         type="text"
@@ -135,6 +134,7 @@ function EditeUser(props) {
         onChange={handleChange}
         name="street"
       />
+      
       <TextInput
         label="Numero"
         type="text"
@@ -179,23 +179,18 @@ function EditeUser(props) {
         onChange={handleChange}
         name="complement"
       />
-      <TextInput
-        label="CEP"
-        type="text"
-        required={false}
-        value={state.postalCode}
-        onChange={handleChange}
-        name="postalCode"
-      />
+
       <button type="submit" className="SaveBTN btn btn-primary">
-        Save
+        Salvar
       </button>
 
-      <Link type="button" to="/" className="btn btn-primary">Cancel</Link>
+      <Link type="button" to="/" className="btn btn-primary">Cancelar</Link>
+
+      <Link type="button" to={`/deleteUser/${id}`} className="btn btn-danger">Deletar Conta</Link>
     </form>
 
     
   );
 }
 
-export default EditeUser;
+export default EditUser;

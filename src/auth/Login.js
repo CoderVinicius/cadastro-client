@@ -24,6 +24,7 @@ function Login(props) {
 
     try {
       const response = await api.post("/login", state);
+      const id = response.data.user._id;
 
       authContext.setLoggedInUser({ ...response.data });
       localStorage.setItem(
@@ -31,7 +32,8 @@ function Login(props) {
         JSON.stringify({ ...response.data })
       );
       setError(null);
-      props.history.push("/profile");
+
+      props.history.push(`/profile/${id}`);
     } catch (err) {
       console.error(err.response);
      
@@ -41,11 +43,11 @@ function Login(props) {
   return (
     <div className="container mt-5">
       <form onSubmit={handleSubmit}>
-        <h1>Cadastro</h1>
+        <h1>Entrar</h1>
 
         <TextInput
-          label="E-mail"
-          type="email"
+          label="Entre com E-mail, CPF ou PIS"
+          type="email/number"
           name="email"
           id="signupFormEmail"
           value={state.email}
