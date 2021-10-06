@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const apis = {
-  development: "http://localhost:4000/",
+  development:
+    "mongodb+srv://cadastro-server:sportline@cadastro-server.7odiu.mongodb.ne",
   production: "https://cadastro-server.herokuapp.com/",
 };
 
