@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../apis/api";
 
@@ -17,6 +18,11 @@ function Login(props) {
       ...state,
       [event.currentTarget.name]: event.currentTarget.value,
     });
+  }
+
+  const history = useHistory();
+  function handleClose() {
+    history.goBack("/");
   }
 
   async function handleSubmit(event) {
@@ -72,8 +78,11 @@ function Login(props) {
         {error ? <div className="alert alert-danger">{error}</div> : null}
 
         <div className="form-group">
-          <button className="btn btn-success" type="submit">
+          <button className="btn btn-success m-2" type="submit">
             Entrar
+          </button>
+          <button className="btn btn-warning" onClick={handleClose}>
+            Voltar
           </button>
         </div>
 

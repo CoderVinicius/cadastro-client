@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useHistory } from "react-router-dom";
 import api from "../apis/api";
 import TextInput from "../components/TextInput";
 
@@ -24,6 +24,11 @@ function Signup(props) {
       ...state,
       [event.currentTarget.name]: event.currentTarget.value,
     });
+  }
+
+  const history = useHistory();
+  function handleClose() {
+    history.goBack("/");
   }
 
   async function handleSubmit(event) {
@@ -176,8 +181,11 @@ function Signup(props) {
         required
       />
       <div className="form-group">
-        <button className="btn btn-warning" type="submit">
+        <button className="btn btn-warning m-2" type="submit">
           Save
+        </button>
+        <button className="btn btn-warning" onClick={handleClose}>
+          Voltar
         </button>
       </div>
     </form>
