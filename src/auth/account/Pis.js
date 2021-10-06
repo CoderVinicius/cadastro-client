@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../apis/api";
 
@@ -8,7 +9,7 @@ import TextInput from "../../components/TextInput";
 
 function Pis(props) {
   const authContext = useContext(AuthContext);
-
+  const history = useHistory();
   const [state, setState] = useState({ password: "", pis: "" });
   const [error, setError] = useState(null);
 
@@ -17,6 +18,9 @@ function Pis(props) {
       ...state,
       [event.currentTarget.name]: event.currentTarget.value,
     });
+  }
+  function handleClose() {
+    history.goBack("/login");
   }
 
   async function handleSubmit(event) {
@@ -65,8 +69,11 @@ function Pis(props) {
         {error ? <div className="alert alert-danger">{error}</div> : null}
 
         <div className="form-group">
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-warning m-3" type="submit">
             Entrar
+          </button>
+          <button className="btn btn-warning" onClick={handleClose}>
+            Voltar
           </button>
         </div>
 

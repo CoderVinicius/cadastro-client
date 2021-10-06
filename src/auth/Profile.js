@@ -105,7 +105,11 @@ function Profile() {
         <Link className="btn btn-warning" to={`/editUser/${id}`}>
           Editar Perfil
         </Link>
-        <button type="button" className="btn btn-danger" onClick={handleLogOut}>
+        <button
+          type="button"
+          className="btn btn-danger m-3"
+          onClick={handleLogOut}
+        >
           Sair da Conta
         </button>
       </div>
