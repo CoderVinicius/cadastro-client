@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import api from "../apis/api";
+import api from "../../apis/api";
 
-import { AuthContext } from "../auth/authContext";
+import { AuthContext } from "../../auth/authContext";
 
-import TextInput from "../components/TextInput";
+import TextInput from "../../components/TextInput";
 
-function Login(props) {
+function Pis(props) {
   const authContext = useContext(AuthContext);
 
-  const [state, setState] = useState({ password: "", email: "" });
+  const [state, setState] = useState({ password: "", pis: "" });
   const [error, setError] = useState(null);
 
   function handleChange(event) {
@@ -42,21 +42,14 @@ function Login(props) {
   return (
     <div className="container mt-5">
       <form onSubmit={handleSubmit}>
-        <h1>Entrar</h1>
-        <div className="login-buttons">
-          <Link className="btn btn-warning m-2" to={"/login/cpf"}>
-            Entrar com CPF
-          </Link>
-          <Link className="btn btn-warning" to={"/login/pis"}>
-            Entrar com PIS
-          </Link>
-        </div>
+        <h1 className="mb-5">Entrar</h1>
+
         <TextInput
-          label="Entre com E-mail"
-          type="email/number"
-          name="email"
-          id="signupFormEmail"
-          value={state.email}
+          label="Entre com PIS"
+          type="number"
+          name="pis"
+          id="signupFormPis"
+          value={state.number}
           onChange={handleChange}
         />
 
@@ -72,7 +65,7 @@ function Login(props) {
         {error ? <div className="alert alert-danger">{error}</div> : null}
 
         <div className="form-group">
-          <button className="btn btn-success" type="submit">
+          <button className="btn btn-primary" type="submit">
             Entrar
           </button>
         </div>
@@ -85,4 +78,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Pis;

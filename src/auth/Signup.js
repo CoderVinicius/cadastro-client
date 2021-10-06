@@ -30,8 +30,15 @@ function Signup(props) {
     event.preventDefault(props);
 
     try {
-      const { street, country, city, district, postalCode, number, complement } =
-        state;
+      const {
+        street,
+        country,
+        city,
+        district,
+        postalCode,
+        number,
+        complement,
+      } = state;
 
       const response = await api.post("/signup", {
         ...state,
@@ -56,6 +63,7 @@ function Signup(props) {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1 className="mb-2">Cadastro</h1>
       <TextInput
         label="Nome Completo"
         id="name"
@@ -158,7 +166,7 @@ function Signup(props) {
         name="postalCode"
         required
       />
-     <TextInput
+      <TextInput
         label="Complemento"
         id="complement"
         type="text"
@@ -168,7 +176,7 @@ function Signup(props) {
         required
       />
       <div className="form-group">
-        <button className="btn btn-primary" type="submit">
+        <button className="btn btn-warning" type="submit">
           Save
         </button>
       </div>

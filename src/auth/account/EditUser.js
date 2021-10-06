@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import TextInput from "../../components/TextInput";
 import api from "../../apis/api";
 import { useHistory, useParams } from "react-router-dom";
-import { Link } from 'react-router-dom'
-
+import { Link } from "react-router-dom";
 
 function EditUser(props) {
-
   const history = useHistory();
 
   const [state, setState] = useState({
@@ -21,42 +19,43 @@ function EditUser(props) {
       district: "",
       postalCode: "",
       number: "",
-    }
+    },
   });
 
   const { id } = useParams();
 
   function handleChange(event) {
-    setState({ ...state, [event.currentTarget.name]: event.currentTarget.value, });
+    setState({
+      ...state,
+      [event.currentTarget.name]: event.currentTarget.value,
+    });
   }
 
   useEffect(() => {
     async function fetchEditUser() {
-        try {
-          const foundUser = await api.get("/profile");
-  
-          const addressObj = ({ ...foundUser.data.address });
-  
-          delete foundUser.data.address;
-          delete addressObj._id;
-  
-          setState({
-            ...foundUser.data,
-            ...addressObj,
-          });
-  
-        } catch (err) {
-          console.log(err);
-        }
+      try {
+        const foundUser = await api.get("/profile");
+
+        const addressObj = { ...foundUser.data.address };
+
+        delete foundUser.data.address;
+        delete addressObj._id;
+
+        setState({
+          ...foundUser.data,
+          ...addressObj,
+        });
+      } catch (err) {
+        console.log(err);
       }
-      fetchEditUser();
-    }, []); 
+    }
+    fetchEditUser();
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
 
     try {
-
       const {
         street,
         complement,
@@ -67,20 +66,22 @@ function EditUser(props) {
         number,
       } = state;
 
-      const response = await api.put(`/editUser/${id}`, {...state, address: {
-        street,
-        complement,
-        country,
-        city,
-        district,
-        postalCode,
-        number,
-      },});
+      const response = await api.put(`/editUser/${id}`, {
+        ...state,
+        address: {
+          street,
+          complement,
+          country,
+          city,
+          district,
+          postalCode,
+          number,
+        },
+      });
 
-      console.log("eu sou handleSubmit --> ", response)
+      console.log("eu sou handleSubmit --> ", response);
 
-      history.push(`/profile/${id}`)
-
+      history.push(`/profile/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -113,7 +114,7 @@ function EditUser(props) {
         value={state.pis}
         onChange={handleChange}
         name="pis"
-      />    
+      />
 
       <h2 className="mb-4 mt-4">Address</h2>
 
@@ -134,7 +135,7 @@ function EditUser(props) {
         onChange={handleChange}
         name="street"
       />
-      
+
       <TextInput
         label="Numero"
         type="text"
@@ -180,16 +181,18 @@ function EditUser(props) {
         name="complement"
       />
 
-      <button type="submit" className="SaveBTN btn btn-primary">
+      <button type="submit" className="btn btn-warning">
         Salvar
       </button>
 
-      <Link type="button" to="/" className="btn btn-primary">Cancelar</Link>
+      <Link type="button" to="/" className="btn btn-warning">
+        Cancelar
+      </Link>
 
-      <Link type="button" to={`/deleteUser/${id}`} className="btn btn-danger">Deletar Conta</Link>
+      <Link type="button" to={`/deleteUser/${id}`} className="btn btn-danger">
+        Deletar Conta
+      </Link>
     </form>
-
-    
   );
 }
 

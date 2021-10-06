@@ -12,20 +12,48 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+body {
+  background-color: #2f3744;
+  margin: auto;
   color: white;
+}
+
+#root {
+  background-color: #282c34;
+  color: white;
+  height: 1150px;
+  margin: 0;
+  padding: 0;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.home {
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home h1 {
+  padding: 35px;
+}
+
+.navbar {
+  display: flex;
+  text-align: center;
+}
+.container {
+  margin-left: 40px;
+}
+.navbar-brand {
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 4em;
+  margin-top: 0;
 }
 
 @keyframes App-logo-spin {
@@ -36,5 +64,3 @@
     transform: rotate(360deg);
   }
 }
-
-

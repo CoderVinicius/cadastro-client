@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import api from "../apis/api";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../auth/authContext";
 
+import api from "../apis/api";
 
 function Profile() {
   const [state, setState] = useState({
@@ -19,10 +21,13 @@ function Profile() {
       district: "",
       postalCode: "",
       number: "",
-    }
+    },
   });
 
   const { id } = useParams();
+
+  const authContext = useContext(AuthContext);
+  const history = useHistory();
 
   useEffect(() => {
     async function FetchProfile() {
@@ -30,8 +35,7 @@ function Profile() {
         const response = await api.get("/profile");
         console.log("eu sou Response no Profile ---> ", response);
 
-        setState({ ...response.data,   });
-
+        setState({ ...response.data });
       } catch (err) {
         console.log(err);
       }
@@ -39,10 +43,17 @@ function Profile() {
     FetchProfile();
   }, []);
 
+  function handleLogOut() {
+    authContext.setLoggedInUser({});
+    localStorage.removeItem("loggedInUser");
+    history.push("/");
+  }
+
   return (
     <div>
-      <h1>Olá, {state.name}!</h1>  
+      <h1 className="mb-3">Olá, {state.name}!</h1>
       <hr />
+      <h1 className="mb-4">Meu Perfil</h1>
       <p>
         <strong>Nome: </strong>
         {state.name}
@@ -90,9 +101,14 @@ function Profile() {
         <strong>CEP: </strong>
         {state.address.postalCode}
       </p>
-      <Link className="btn btn-primary" to={`/editUser/${id}`} >
-        Editar Perfil
-      </Link>
+      <div>
+        <Link className="btn btn-warning" to={`/editUser/${id}`}>
+          Editar Perfil
+        </Link>
+        <button type="button" className="btn btn-danger" onClick={handleLogOut}>
+          Sair da Conta
+        </button>
+      </div>
     </div>
   );
 }
