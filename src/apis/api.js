@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apis = {
   development: "http://localhost:4000/api",
-  production: "https://cadastro-server.herokuapp.com/api",
+  production: "https://ironbank-server.herokuapp.com/api",
 };
 
 const api = axios.create({
