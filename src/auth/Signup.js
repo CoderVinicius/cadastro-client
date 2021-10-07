@@ -78,7 +78,6 @@ function Signup(props) {
         name="name"
         required={true}
       />
-
       <TextInput
         label="E-mail"
         id="email"
@@ -101,6 +100,7 @@ function Signup(props) {
         label="CPF"
         id="document"
         type="number"
+        maxlength="11"
         value={state.document}
         onChange={handleChange}
         name="document"
@@ -134,7 +134,6 @@ function Signup(props) {
         name="number"
         required
       />
-
       <TextInput
         label="País"
         id="country"
@@ -178,7 +177,6 @@ function Signup(props) {
         value={state.complement}
         onChange={handleChange}
         name="complement"
-        required
       />
       <div className="form-group">
         <button className="btn btn-warning m-2" type="submit">
