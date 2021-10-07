@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../apis/api";
 import TextInput from "../components/TextInput";
+const BrV = require("br-validations");
 
 function Signup(props) {
   const [state, setState] = useState({
@@ -33,6 +34,24 @@ function Signup(props) {
 
   async function handleSubmit(event) {
     event.preventDefault(props);
+    const isCpfValid = BrV.cpf.validate(state.document);
+    const isPisValid = BrV.pis.validate(state.pis);
+    const regex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
+
+    if (!state.password.match(regex)) {
+      alert(
+        "Senha deve conter: Mínimo de oito caracteres, pelo menos, uma letra maiúscula, uma letra minúscula, um número e um caractere especial "
+      );
+      return;
+    }
+    if (!isCpfValid) {
+      alert("CPF inválido");
+      return;
+    } else if (!isPisValid) {
+      alert("PIS inválido");
+      return;
+    }
 
     try {
       const {
@@ -63,8 +82,6 @@ function Signup(props) {
       console.log(err.response);
     }
   }
-
-  console.log(state);
 
   return (
     <form onSubmit={handleSubmit}>
